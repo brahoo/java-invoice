@@ -3,6 +3,7 @@ package pl.edu.agh.mwo.invoice;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import pl.edu.agh.mwo.invoice.product.Product;
 
@@ -30,10 +31,23 @@ public class Invoice {
     }
 
     public BigDecimal getTax() {
+
+//        BigDecimal sum = BigDecimal.ZERO;
+//        for (Product product : this.products.keySet()) {
+//
+//            sum = sum.add(product.ge)
+//        }
+
         return BigDecimal.ZERO;
     }
 
     public BigDecimal getTotal() {
-        return BigDecimal.ZERO;
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Product product : products.keySet()) {
+            BigDecimal quantity = BigDecimal.valueOf(products.get(product));
+            sum = sum.add(product.getPriceWithTax().multiply(quantity));
+        }
+
+        return sum;
     }
 }
