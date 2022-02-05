@@ -11,7 +11,7 @@ public class Invoice {
     private Map<Product, Integer> products = new HashMap<>();
 
     public void addProduct(Product product, Integer quantity) {
-        if (quantity == 0) throw new IllegalArgumentException("Quantity cannot be 0");
+        if (quantity <= 0) throw new IllegalArgumentException("Quantity cannot be equal to or less than 0");
 
         this.products.put(product, quantity);
     }
