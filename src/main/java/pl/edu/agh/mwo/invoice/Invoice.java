@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import pl.edu.agh.mwo.invoice.product.Product;
 
+import static java.lang.String.valueOf;
+
 public class Invoice {
     private Map<Product, Integer> products = new HashMap<>();
     private static int nextNumber = 0;
@@ -45,5 +47,12 @@ public class Invoice {
 
     public int getNumber() {
         return number;
+    }
+
+    public String print() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(valueOf(number));
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
 }

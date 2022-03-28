@@ -13,6 +13,8 @@ import pl.edu.agh.mwo.invoice.product.OtherProduct;
 import pl.edu.agh.mwo.invoice.product.Product;
 import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
 
+import static java.lang.String.valueOf;
+
 public class InvoiceTest {
     private Invoice invoice;
 
@@ -149,5 +151,13 @@ public class InvoiceTest {
         int number1 = new Invoice().getNumber();
         int number2 = new Invoice().getNumber();
         Assert.assertThat(number1, Matchers.lessThan(number2));
+    }
+
+    @Test
+    public void testPrintedInvoiceHasCorrectNumber() {
+        String number1 = valueOf(invoice.getNumber());
+        String[] splitedInvoice = invoice.print().split("\n");
+        String number2 = splitedInvoice[0];
+        Assert.assertEquals(number1, number2);
     }
 }
