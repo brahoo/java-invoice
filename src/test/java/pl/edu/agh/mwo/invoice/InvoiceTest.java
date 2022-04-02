@@ -156,8 +156,17 @@ public class InvoiceTest {
     @Test
     public void testPrintedInvoiceHasCorrectNumber() {
         String number1 = valueOf(invoice.getNumber());
-        String[] splitedInvoice = invoice.print().split("\n");
+        String[] splitedInvoice = invoice.toString().split("\n");
         String number2 = splitedInvoice[0];
         Assert.assertEquals(number1, number2);
+    }
+
+    @Test
+    public void testPrintedInvoiceHasCorrectQuantity() {
+        invoice.addProduct(new TaxFreeProduct("ziemniaki", new BigDecimal("10")), 1);
+        invoice.addProduct(new TaxFreeProduct("pomidory", new BigDecimal("20")), 1);
+        String[] splitedInvoice = invoice.toString().split("\n");
+        String quantity = splitedInvoice[splitedInvoice.length-1];
+        Assert.assertEquals("2",quantity);
     }
 }
