@@ -13,6 +13,8 @@ import pl.edu.agh.mwo.invoice.product.OtherProduct;
 import pl.edu.agh.mwo.invoice.product.Product;
 import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
 
+import static java.lang.String.valueOf;
+
 public class InvoiceTest {
     private Invoice invoice;
 
@@ -124,5 +126,47 @@ public class InvoiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAddingNullProduct() {
         invoice.addProduct(null);
+    }
+
+    @Test
+    public void testInvoiceHasNumberGreaterThan0() {
+        int number = invoice.getNumber();
+        Assert.assertThat(number, Matchers.greaterThan(0));
+    }
+
+    @Test
+    public void testTwoInvoicesHaveDifferentNumbers() {
+        int number1 = new Invoice().getNumber();
+        int number2 = new Invoice().getNumber();
+        Assert.assertNotEquals(number1, number2);
+    }
+
+    @Test
+    public void testInvoiceDoesNotChangeItsNumber() {
+        Assert.assertEquals(invoice.getNumber(), invoice.getNumber());
+    }
+
+    @Test
+    public void testTheFirstInvoiceNumberIsLowerThanTheSecond() {
+        int number1 = new Invoice().getNumber();
+        int number2 = new Invoice().getNumber();
+        Assert.assertThat(number1, Matchers.lessThan(number2));
+    }
+
+    @Test
+    public void testPrintedInvoiceHasCorrectNumber() {
+        String number1 = valueOf(invoice.getNumber());
+        String[] splitedInvoice = invoice.toString().split("\n");
+        String number2 = splitedInvoice[0];
+        Assert.assertEquals(number1, number2);
+    }
+
+    @Test
+    public void testPrintedInvoiceHasCorrectQuantity() {
+        invoice.addProduct(new TaxFreeProduct("ziemniaki", new BigDecimal("10")), 1);
+        invoice.addProduct(new TaxFreeProduct("pomidory", new BigDecimal("20")), 1);
+        String[] splitedInvoice = invoice.toString().split("\n");
+        String quantity = splitedInvoice[splitedInvoice.length-1];
+        Assert.assertEquals("2",quantity);
     }
 }

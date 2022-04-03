@@ -3,11 +3,12 @@ package pl.edu.agh.mwo.invoice;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
-    private Map<Product, Integer> products = new HashMap<Product, Integer>();
+    private Map<Product, Integer> products = new HashMap<>();
+    private static int nextNumber = 0;
+    private final int number = ++nextNumber;
 
     public void addProduct(Product product) {
         addProduct(product, 1);
@@ -40,5 +41,19 @@ public class Invoice {
             totalGross = totalGross.add(product.getPriceWithTax().multiply(quantity));
         }
         return totalGross;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(number);
+        stringBuilder.append("\n");
+        stringBuilder.append(products.size());
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
 }
