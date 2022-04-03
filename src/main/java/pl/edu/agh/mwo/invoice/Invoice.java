@@ -56,7 +56,8 @@ public class Invoice {
             stringBuilder.append(
                     product.getName()
                     + " ilość: " + products.get(product)
-                    + " cena: " + product.getPriceWithTax().multiply(new BigDecimal(products.get(product)))
+                    + " cena: "
+                    + product.getPriceWithTax().multiply(new BigDecimal(products.get(product)))
                     + "\n"
             );
         }
