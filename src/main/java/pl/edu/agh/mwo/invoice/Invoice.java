@@ -51,8 +51,7 @@ public class Invoice {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(number);
-        stringBuilder.append("\n");
+        stringBuilder.append(number + "\n");
         for (Product product : products.keySet()) {
             stringBuilder.append(
                     product.getName() +
