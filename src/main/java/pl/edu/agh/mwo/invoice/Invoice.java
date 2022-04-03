@@ -2,11 +2,12 @@ package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
-    private Map<Product, Integer> products = new HashMap<>();
+    private Map<Product, Integer> products = new LinkedHashMap<>();
     private static int nextNumber = 0;
     private final int number = ++nextNumber;
 
@@ -52,6 +53,14 @@ public class Invoice {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(number);
         stringBuilder.append("\n");
+        for (Product product : products.keySet()) {
+            stringBuilder.append(
+                    product.getName() +
+                    " ilość: " + products.get(product) +
+                    " cena: " + product.getPriceWithTax().multiply(new BigDecimal(products.get(product))) +
+                    "\n"
+            );
+        }
         stringBuilder.append("Liczba pozycji: " + products.size());
         stringBuilder.append("\n");
         return stringBuilder.toString();

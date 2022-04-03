@@ -169,4 +169,13 @@ public class InvoiceTest {
         String quantity = splitedInvoice[splitedInvoice.length-1];
         Assert.assertEquals("Liczba pozycji: 2",quantity);
     }
+
+    @Test
+    public void testPrintedInvoiceHasCorrectPositions() {
+        invoice.addProduct(new TaxFreeProduct("ziemniaki", new BigDecimal("10")), 1);
+        invoice.addProduct(new TaxFreeProduct("pomidory", new BigDecimal("20")), 2);
+        String[] splitedInvoice = invoice.toString().split("\n");
+        Assert.assertEquals("ziemniaki ilość: 1 cena: 10", splitedInvoice[1]);
+        Assert.assertEquals("pomidory ilość: 2 cena: 40", splitedInvoice[2]);
+    }
 }
