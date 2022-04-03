@@ -167,6 +167,6 @@ public class InvoiceTest {
         invoice.addProduct(new TaxFreeProduct("pomidory", new BigDecimal("20")), 1);
         String[] splitedInvoice = invoice.toString().split("\n");
         String quantity = splitedInvoice[splitedInvoice.length-1];
-        Assert.assertEquals("2",quantity);
+        Assert.assertEquals("Liczba pozycji: 2",quantity);
     }
 }

@@ -52,7 +52,7 @@ public class Invoice {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(number);
         stringBuilder.append("\n");
-        stringBuilder.append(products.size());
+        stringBuilder.append("Liczba pozycji: " + products.size());
         stringBuilder.append("\n");
         return stringBuilder.toString();
     }
