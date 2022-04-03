@@ -55,7 +55,8 @@ public class Invoice {
         for (Product product : products.keySet()) {
             stringBuilder.append(
                     product.getName()
-                    + " ilość: " + products.get(product)
+                    + " ilość: "
+                    + products.get(product)
                     + " cena: "
                     + product.getPriceWithTax().multiply(new BigDecimal(products.get(product)))
                     + "\n"
