@@ -55,10 +55,12 @@ public class Invoice {
         stringBuilder.append(number + "\n");
         for (Product tempProduct : products.keySet()) {
             stringBuilder.append(
-                    tempProduct.getName()
-                            + " ilość: " + products.get(tempProduct)
-                            + " cena: " + tempProduct.getPriceWithTax().multiply(new BigDecimal(products.get(tempProduct)))
-                            + "\n"
+                tempProduct.getName()
+                + " ilość: "
+                + products.get(tempProduct)
+                + " cena: "
+                + tempProduct.getPriceWithTax().multiply(new BigDecimal(products.get(tempProduct)))
+                + "\n"
             );
         }
         stringBuilder.append("Liczba pozycji: " + products.size() +"\n");
