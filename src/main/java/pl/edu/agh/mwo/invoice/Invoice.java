@@ -19,7 +19,8 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        products.put(product, quantity);
+        Integer totalQuantity = products.getOrDefault(product, 0) + quantity;
+        products.put(product, totalQuantity);
     }
 
     public BigDecimal getNetTotal() {
@@ -52,18 +53,15 @@ public class Invoice {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(number + "\n");
-        for (Product product : products.keySet()) {
+        for (Product tempProduct : products.keySet()) {
             stringBuilder.append(
-                    product.getName()
-                    + " ilość: "
-                    + products.get(product)
-                    + " cena: "
-                    + product.getPriceWithTax().multiply(new BigDecimal(products.get(product)))
-                    + "\n"
+                    tempProduct.getName()
+                            + " ilość: " + products.get(tempProduct)
+                            + " cena: " + tempProduct.getPriceWithTax().multiply(new BigDecimal(products.get(tempProduct)))
+                            + "\n"
             );
         }
-        stringBuilder.append("Liczba pozycji: " + products.size());
-        stringBuilder.append("\n");
+        stringBuilder.append("Liczba pozycji: " + products.size() +"\n");
         return stringBuilder.toString();
     }
 }

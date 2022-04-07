@@ -162,7 +162,7 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testPrintedInvoiceHasCorrectQuantity() {
+    public void testPrintedInvoiceHasCorrectQuantityOfPositions() {
         invoice.addProduct(new TaxFreeProduct("ziemniaki", new BigDecimal("10")), 1);
         invoice.addProduct(new TaxFreeProduct("pomidory", new BigDecimal("20")), 1);
         String[] splitedInvoice = invoice.toString().split("\n");
@@ -170,12 +170,47 @@ public class InvoiceTest {
         Assert.assertEquals("Liczba pozycji: 2",quantity);
     }
 
-    @Test
+    @Test //position price with tax
     public void testPrintedInvoiceHasCorrectPositions() {
-        invoice.addProduct(new TaxFreeProduct("ziemniaki", new BigDecimal("10")), 1);
-        invoice.addProduct(new TaxFreeProduct("pomidory", new BigDecimal("20")), 2);
+        invoice.addProduct(new OtherProduct("ziemniaki", new BigDecimal("10")), 1);
+        invoice.addProduct(new DairyProduct("pomidory", new BigDecimal("20")), 2);
         String[] splitedInvoice = invoice.toString().split("\n");
-        Assert.assertEquals("ziemniaki ilość: 1 cena: 10", splitedInvoice[1]);
-        Assert.assertEquals("pomidory ilość: 2 cena: 40", splitedInvoice[2]);
+        Assert.assertEquals("ziemniaki ilość: 1 cena: 12.30", splitedInvoice[1]);
+        Assert.assertEquals("pomidory ilość: 2 cena: 43.20", splitedInvoice[2]);
+    }
+
+    @Test
+    public void testPrintedEmptyInvoiceQuantityOfPositionIs0() {
+        String[] splitedInvoice = invoice.toString().split("\n");
+        String quantity = splitedInvoice[splitedInvoice.length-1];
+        Assert.assertEquals("Liczba pozycji: 0", quantity);
+    }
+
+    @Test
+    public void testPrintedEmptyInvoiceHasNoPositions() {
+        String[] splitedInvoice = invoice.toString().split("\n");
+        int quantityOfLines = splitedInvoice.length;
+        Assert.assertEquals(2, quantityOfLines);
+    }
+
+    @Test
+    public void testPrintedInvoiceDoesNotChangeItsView() {
+        String invoiceView1 = invoice.toString();
+        String invoiceView2 = invoice.toString();
+        Assert.assertEquals(invoiceView1, invoiceView2);
+    }
+
+    @Test
+    public void testInPrintedInvoiceTheSameProductsAreInTheSamePosition() {
+        Product p1 = new TaxFreeProduct("ogórek", new BigDecimal(10));
+        Product p2 = new TaxFreeProduct("banan", new BigDecimal(15));
+
+        invoice.addProduct(p1, 2);
+        invoice.addProduct(p2,2);
+        invoice.addProduct(p1,3);
+
+        String[] splitedInvoice = invoice.toString().split("\n");
+        Assert.assertEquals("ogórek ilość: 5 cena: 50", splitedInvoice[1]);
+        Assert.assertEquals("banan ilość: 2 cena: 30", splitedInvoice[2]);
     }
 }
