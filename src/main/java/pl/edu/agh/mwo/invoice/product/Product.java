@@ -38,7 +38,7 @@ public abstract class Product {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Product) {
+        if (obj instanceof Product) {
             Product otherProduct = (Product) obj;
             return name.equals(otherProduct.name)
                 && price.equals(otherProduct.price)

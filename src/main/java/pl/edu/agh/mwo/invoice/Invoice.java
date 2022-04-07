@@ -63,7 +63,7 @@ public class Invoice {
                 + "\n"
             );
         }
-        stringBuilder.append("Liczba pozycji: " + products.size() +"\n");
+        stringBuilder.append("Liczba pozycji: " + products.size() + "\n");
         return stringBuilder.toString();
     }
 }
